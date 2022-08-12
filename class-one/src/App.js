@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
@@ -6,7 +6,8 @@ const Wrapper = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  overflow:hidden;
+  background: ${(props) => props.theme.backgroundColor};
+  overflow: hidden;
 `;
 
 const rotateAni = keyframes`
@@ -36,26 +37,30 @@ const Box = styled.div`
   height: 200px;
   background-color: tomato;
   animation: ${rotateAni} 2s linear infinite;
-  ${Emoji}{
-    &:hover{
+  ${Emoji} {
+    &:hover {
       transform: scale(1.5);
       transition: 0.3s ease;
     }
-    &:active{
+    &:active {
       opacity: 0;
     }
   }
-`
+`;
 
+const Title = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`;
 
 const App = () => {
   return (
     <Wrapper>
+      <Title>Hello</Title>
       <Box>
         <Emoji as="p">😀</Emoji>
       </Box>
     </Wrapper>
   );
-}
+};
 
 export default App;
