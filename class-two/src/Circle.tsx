@@ -14,7 +14,7 @@ const Container = styled.div<CircleProps>`
 `;
 
 const Circle = ({ bgColor, borderColor }: CircleProps) => (
-  <Container bgColor={bgColor} borderColor={borderColor} />
+  <Container bgColor={bgColor} borderColor={borderColor ?? bgColor} />
 );
 
 export default Circle;
