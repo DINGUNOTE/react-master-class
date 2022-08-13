@@ -3,6 +3,7 @@ import styled from 'styled-components';
 interface CircleProps {
   bgColor: string;
   borderColor?: string;
+  text?: string;
 }
 
 const Container = styled.div<CircleProps>`
@@ -13,8 +14,14 @@ const Container = styled.div<CircleProps>`
   border-radius: 50%;
 `;
 
-const Circle = ({ bgColor, borderColor }: CircleProps) => (
-  <Container bgColor={bgColor} borderColor={borderColor ?? bgColor} />
+const Circle = ({
+  bgColor,
+  borderColor,
+  text = 'Default Text',
+}: CircleProps) => (
+  <Container bgColor={bgColor} borderColor={borderColor ?? bgColor}>
+    {text}
+  </Container>
 );
 
 export default Circle;
