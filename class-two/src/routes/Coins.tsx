@@ -2,12 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Container = styled.div`
-  margin: 0 auto;
-  padding: 0 1rem 1rem 1rem;
-  max-width: 480px;
-`;
-
 const Header = styled.header`
   display: flex;
   align-items: center;
@@ -75,7 +69,7 @@ const Coins = () => {
   }, []);
 
   return (
-    <Container>
+    <>
       <Header>
         <Title>Coin Tracker</Title>
       </Header>
@@ -96,7 +90,7 @@ const Coins = () => {
           ))}
         </CoinList>
       )}
-    </Container>
+    </>
   );
 };
 
