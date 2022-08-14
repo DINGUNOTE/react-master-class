@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 
 export const theme: DefaultTheme = {
-  textColor: '#222',
-  bgColor: '#fff',
-  btnColor: 'tomato',
+  textColor: '#f5f6fa',
+  bgColor: '#2f3640',
+  accentColor: '#44bd32',
 };
