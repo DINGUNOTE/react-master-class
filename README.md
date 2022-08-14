@@ -1,5 +1,9 @@
 # 💡 React JS 마스터클래스 강의 학습 내용
 
+## 🚀 Project
+
+- [TOP 100 Crypto Tracker](https://github.com/DINGUNOTE/react-master-class/tree/main/class-two)
+
 ## 📌 styled-components
 
 - React에서 컴포넌트에 style을 부여하는 방법 중 인라인 스타일로 컴포넌트 구현부에서 스타일을 추가하는 방식이 있고, CSS Module을 이용하는 방법이 있지만 첫 번째는 코드의 가독성이 떨어지고, 그로 인해서 컴포넌트의 역할을 파악하기 어렵게 된다. 두 번째는 css module을 위해 추가로 파일을 생성해야 하는 번거로움이 있다. 이런 문제를 해결하고, 컴포넌트 내부에서 쉽게 스타일을 부여하기 위해서 `styled-components`를 주로 사용한다.
@@ -180,6 +184,20 @@
 
   export default App;
   ```
+
+## 📌 React Query
+
+- React 애플리케이션에서 서버 state를 fetching, caching, synchronizing, updating 할 수 있게 도와주는 라이브러리
+- `global state`를 건드리지 않고 React 및 React Native 애플리케이션에서 데이터를 가져오고, 캐시하고, 업데이트 한다.
+- [https://react-query.tanstack.com/quick-start](https://react-query.tanstack.com/quick-start)
+
+```jsx
+// Create a client
+const queryClient = new QueryClient()
+
+// Provide the client to your App
+<QueryClientProvider client={queryClient} />
+```
 
 > ### Reference
 >
