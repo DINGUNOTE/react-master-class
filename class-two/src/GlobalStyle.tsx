@@ -6,6 +6,8 @@ const GlobalStyle = createGlobalStyle`
 
   *, *:before, *:after{box-sizing:border-box;}
   
+  html{font-size:16px;}
+
   html,body{height:100%;}
 
   body{
@@ -13,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.bgColor};}
 
-  a{text-decoration:none;}
+  a{color:inherit;text-decoration:none;}
 `;
 
 export default GlobalStyle;
