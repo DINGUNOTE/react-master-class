@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import {
   Link,
   Outlet,
@@ -7,6 +7,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchCoinInfo, fetchCoinPrice } from '../api';
 
 const Header = styled.header`
   display: flex;
@@ -81,7 +82,7 @@ interface RouteState {
   };
 }
 
-interface InfoData {
+interface IInfoData {
   id: string;
   name: string;
   symbol: string;
@@ -102,7 +103,7 @@ interface InfoData {
   last_data_at: string;
 }
 
-interface PriceData {
+interface ITickersData {
   id: string;
   name: string;
   symbol: string;
@@ -113,14 +114,14 @@ interface PriceData {
   beta_value: number;
   first_data_at: Date;
   last_updated: Date;
-  quotes: Quotes;
+  quotes: IQuotes;
 }
 
-interface Quotes {
-  USD: Usd;
+interface IQuotes {
+  USD: IUsd;
 }
 
-interface Usd {
+interface IUsd {
   price: number;
   volume_24h: number;
   volume_24h_change_24h: number;
@@ -141,64 +142,57 @@ interface Usd {
 }
 
 const Coin = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const { coinId } = useParams();
   const { state } = useLocation() as RouteState;
-  const [info, setInfo] = useState<InfoData>();
-  const [priceInfo, setPriceInfo] = useState<PriceData>();
+
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
+    ['info', coinId],
+    () => fetchCoinInfo(`${coinId}`)
+  );
+  const { isLoading: tickersLoading, data: tickersData } =
+    useQuery<ITickersData>(['tickers', coinId], () =>
+      fetchCoinPrice(`${coinId}`)
+    );
+
+  const loading = infoLoading || tickersLoading;
 
   const chartMatch = useMatch('/:coinId/chart');
   const priceMatch = useMatch('/:coinId/price');
-
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-
-      setInfo(infoData);
-      setPriceInfo(priceData);
-      setIsLoading(false);
-    })();
-  }, [coinId]);
 
   return (
     <>
       <Header>
         <Title>
-          {state?.name ? state.name : isLoading ? 'Loading' : info?.name}
+          {state?.name ? state.name : loading ? 'Loading' : infoData?.name}
         </Title>
       </Header>
-      {isLoading ? (
+      {loading ? (
         <Loader>Loading...</Loader>
       ) : (
         <main>
           <Overview>
             <Item>
               <dt>Rank:</dt>
-              <dd>{info?.rank}</dd>
+              <dd>{infoData?.rank}</dd>
             </Item>
             <Item>
               <dt>Symbol:</dt>
-              <dd>{info?.symbol}</dd>
+              <dd>{infoData?.symbol}</dd>
             </Item>
             <Item>
               <dt>Open Source:</dt>
-              <dd>{info?.open_source ? 'Yes' : 'No'}</dd>
+              <dd>{infoData?.open_source ? 'Yes' : 'No'}</dd>
             </Item>
           </Overview>
-          <section>{info?.description}</section>
+          <section>{infoData?.description}</section>
           <Overview>
             <Item>
               <dt>Total Suply:</dt>
-              <dd>{priceInfo?.total_supply}</dd>
+              <dd>{tickersData?.total_supply}</dd>
             </Item>
             <Item>
               <dt>Max Suply:</dt>
-              <dd>{priceInfo?.max_supply}</dd>
+              <dd>{tickersData?.max_supply}</dd>
             </Item>
           </Overview>
           <Tabs>
