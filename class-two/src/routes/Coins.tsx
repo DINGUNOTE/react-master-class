@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { fetchCoins } from '../api';
+import { Helmet } from 'react-helmet-async';
+import styled from 'styled-components';
 
 const Header = styled.header`
   display: flex;
@@ -61,6 +62,9 @@ const Coins = () => {
 
   return (
     <>
+      <Helmet>
+        <title>TOP 100 Coin Tracker</title>
+      </Helmet>
       <Header>
         <Title>TOP 100 Coin Tracker</Title>
       </Header>

@@ -1,13 +1,14 @@
 import Router from './Router';
 import GlobalStyle from './GlobalStyle';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { HelmetProvider } from 'react-helmet-async';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <HelmetProvider>
+        <Router />
+      </HelmetProvider>
     </>
   );
 };

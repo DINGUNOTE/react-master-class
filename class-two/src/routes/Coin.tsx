@@ -8,12 +8,21 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinPrice } from '../api';
+import { Helmet } from 'react-helmet-async';
 
 const Header = styled.header`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 5rem;
+  a {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    font-size: 1.5rem;
+    transform: translateY(-50%);
+  }
 `;
 
 const Title = styled.h1`
@@ -27,8 +36,9 @@ const Loader = styled.p`
 
 const Overview = styled.section`
   display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 `;
@@ -52,17 +62,16 @@ const Tabs = styled.ul`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  margin: 1.5rem 0;
 `;
 
 const Tab = styled.li<{ isActive: boolean }>`
   font-size: 0.75rem;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) => props.theme.textColor};
   font-weight: 500;
   text-align: center;
   text-transform: uppercase;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) =>
+    props.isActive ? props.theme.accentColor : 'rgba(0, 0, 0, 0.5)'};
   border-radius: 10px;
   a {
     display: block;
@@ -150,8 +159,10 @@ const Coin = () => {
     () => fetchCoinInfo(`${coinId}`)
   );
   const { isLoading: tickersLoading, data: tickersData } =
-    useQuery<ITickersData>(['tickers', coinId], () =>
-      fetchCoinPrice(`${coinId}`)
+    useQuery<ITickersData>(
+      ['tickers', coinId],
+      () => fetchCoinPrice(`${coinId}`),
+      { refetchInterval: 10000 }
     );
 
   const loading = infoLoading || tickersLoading;
@@ -161,10 +172,17 @@ const Coin = () => {
 
   return (
     <>
+      <Helmet>
+        <title>
+          TOP 100 Coin Tracker |{' '}
+          {state?.name ? state.name : loading ? 'Loading' : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? 'Loading' : infoData?.name}
         </Title>
+        <Link to="/">&larr;</Link>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -180,12 +198,9 @@ const Coin = () => {
               <dd>{infoData?.symbol}</dd>
             </Item>
             <Item>
-              <dt>Open Source:</dt>
-              <dd>{infoData?.open_source ? 'Yes' : 'No'}</dd>
+              <dt>Price:</dt>
+              <dd>${tickersData?.quotes.USD.price.toFixed(6)}</dd>
             </Item>
-          </Overview>
-          <section>{infoData?.description}</section>
-          <Overview>
             <Item>
               <dt>Total Suply:</dt>
               <dd>{tickersData?.total_supply}</dd>
@@ -195,6 +210,7 @@ const Coin = () => {
               <dd>{tickersData?.max_supply}</dd>
             </Item>
           </Overview>
+          <section>{infoData?.description}</section>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
@@ -203,7 +219,7 @@ const Coin = () => {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-          <Outlet />
+          <Outlet context={{ coinId: coinId }} />
         </main>
       )}
     </>
