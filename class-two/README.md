@@ -2,7 +2,7 @@
 
 - ### 사용 기술
 
-  - React(CRA with TypeScript), react-router-dom, styled-components, react-query, [coin paprika API](https://api.coinpaprika.com/v1/coins), [Crypto Icon API](https://cryptocurrencyliveprices.com/), [JSON QuickType](https://app.quicktype.io/?l=ts)
+  - React(CRA with TypeScript), react-router-dom, react-helmet-async, styled-components, react-query, [coin paprika API](https://api.coinpaprika.com/v1/coins), [Crypto Icon API](https://cryptocurrencyliveprices.com/), [JSON QuickType](https://app.quicktype.io/?l=ts), [APEX CHARTS](https://apexcharts.com)
 
 - ### 페이지 구성
 

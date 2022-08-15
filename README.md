@@ -190,6 +190,7 @@
 - React 애플리케이션에서 서버 state를 fetching, caching, synchronizing, updating 할 수 있게 도와주는 라이브러리
 - `global state`를 건드리지 않고 React 및 React Native 애플리케이션에서 데이터를 가져오고, 캐시하고, 업데이트 한다.
 - [https://react-query.tanstack.com/quick-start](https://react-query.tanstack.com/quick-start)
+- `useQuery`의 세 번째 파라미터인 options 객체에 `refetchInterval: time(ms)` 값을 주게 되면 해당 밀리초 단위로 계속해서 refetch 시킬 수 있다.
 
 ```jsx
 // Create a client
@@ -198,6 +199,20 @@ const queryClient = new QueryClient()
 // Provide the client to your App
 <QueryClientProvider client={queryClient} />
 ```
+
+## 📌 React Router 6에서 Outlet 컴포넌트와 useOutletContext() 훅을 사용해서 prop 전달하고 받기
+
+```jsx
+// 1. 상위 컴포넌트에서 Outlet 컴포넌트의 context에 prop 전달
+<Outlet context={{ fruit: 'apple' }} />;
+
+// 2. 하위 컴포넌트에서 useOutletContext() hook을 사용해서 props를 받아온다.
+import { useOutletContext } from 'react-router';
+
+const data = useOutletContext(); // { fruit: 'apple' }
+```
+
+- [https://reactrouter.com/docs/en/v6/api#useoutletcontext](https://reactrouter.com/docs/en/v6/api#useoutletcontext)
 
 > ### Reference
 >
