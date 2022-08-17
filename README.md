@@ -3,6 +3,7 @@
 ## 🚀 Project
 
 - [TOP 100 Crypto Tracker](https://github.com/DINGUNOTE/top100-crypto-tracker)
+- [ToDo](https://github.com/DINGUNOTE/practice-recoil-todo)
 
 ## 📌 styled-components
 
@@ -254,6 +255,68 @@ const data = useOutletContext(); // { fruit: 'apple' }
 
 - ### `useSetRecoilState(state)`: Recoil state의 값을 업데이트하기 위한 setter 함수를 반환한다. 상태를 변경하기 위해 비동기로 사용될 수 있는 setter 함수를 반환한다. setter는 새로운 값이나 이전 값을 인수로 받는 updater 함수를 넘겨준다.
   - [https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/](https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/)
+
+## 📌 react-hook-form
+
+직접 form 요소 하나 하나에 state를 선언하고, 이벤트 핸들러를 추가하고, 유효성 검사해야하는 수고로움에서 벗어날 수 있다. 여러 form 요소들을 사용해야 할 때 사용하면 최소한의 코드로 여러 form 요소를 제어할 수 있다.
+<br>사용하기 쉬운 유효성 검사를 통해 성능이 뛰어나고 유연하며 확장이 가능한 form 라이브러리다.
+
+- `register(name)`: name, onBlur(해당 form 요소에서 벗어났을 때 실행되는 이벤트), onChange, onClick, ref를 반환하는 함수
+- `watch()`: form의 입력값들의 변화를 관찰할 수 있게 해주는 함수
+- `handleSubmit(onValidFn, onInvalidFn?)`: 데이터가 유효할 때 호출되는 함수, 데이터가 유효하지 않을 때 호출되는 함수 두 함수를 인자로 받아서 validation을 처리한다. 작성한 코드를 실행할 때 사용한다. [https://react-hook-form.com/api/useform/handlesubmit](https://react-hook-form.com/api/useform/handlesubmit)
+
+```jsx
+import { useForm } from 'react-hook-form';
+
+const App = () => {
+  const { register, watch, handleSubmit } = useForm();
+  const onValid = (data: any) => {
+    console.log(data);
+  };
+
+  console.log(watch());
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onValid)}>
+        <input
+          type="text"
+          {...register('email', { required: true })}
+          placeholder="Email"
+        />
+        <input
+          type="text"
+          {...register('firstName', { required: true })}
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          {...register('lastName', { required: true })}
+          placeholder="Last Name"
+        />
+        <input
+          type="text"
+          {...register('userName', { required: true })}
+          placeholder="Username"
+        />
+        <input
+          type="text"
+          {...register('password', { required: true, minLength: 8 })}
+          placeholder="Password"
+        />
+        <input
+          type="text"
+          {...register('passwordConfirm', { required: true, minLength: 8 })}
+          placeholder="Password Confirm"
+        />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+  );
+};
+
+export default App;
+```
 
 > ### Reference
 >
