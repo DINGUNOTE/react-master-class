@@ -219,20 +219,20 @@ const data = useOutletContext(); // { fruit: 'apple' }
 
 페이스북에서 만든 ReactJS에서 사용할 수 있는 상태 관리 도구, 간단해서 이해도 쉽고 사용하기 좋은 장점이 있다.
 
-- ### 상태 관리가 필요한 이유
+- 상태 관리가 필요한 이유
 
   1. `Prop Drilling` : App의 컴포넌트 복잡도가 심해질수록 props를 하위 컴포넌트로 전달하는 과정이 점점 더 많아지고 코드를 읽을 때 해당 prop을 추적하기 힘들어진다.
   2. 복잡한 상태 업데이트 로직들을 컴포넌트에서 떼어낼 수 있고, 이를 모듈화해서 여러 파일들로 저장해서 보기 좋게 정리할 수 있기 때문에 높은 코드 가독성과 유지 보수에 유리해진다.
 
-- ### `RecoilRoot`
+- `RecoilRoot`
 
   recoil 상태를 사용하는 컴포넌트는 부모 트리에 RecoilRoot가 필요하다. Root 컴포넌트가 RecoilRoot를 넣기 가장 좋은 장소다.
 
-- ### `Atom`
+- `Atom`
 
   Atom은 상태(state)의 일부를 나타낸다. Atoms는 어떤 컴포넌트에서나 읽고 쓸 수 있다. atom의 값을 읽는 컴포넌트들은 암묵적으로 atom을 subscribe한다. 그래서 atom에 변화가 있으면 그 atom을 subscribe하는 모든 컴포넌트들이 리렌더링된다.<br>
 
-- ### `atom()`: 쓰기 가능한 state를 나타내는 atom을 생성한다.
+- `atom()`: 쓰기 가능한 state를 나타내는 atom을 생성한다.
 
   ```javascript
   const textState = atom({
@@ -241,7 +241,7 @@ const data = useOutletContext(); // { fruit: 'apple' }
   });
   ```
 
-- ### `useRecoilState(state, setState)`: 컴포넌트가 atom을 읽고 쓰게 하기 위해서 useRecoilState()를 사용한다.
+- `useRecoilState(state, setState)`: 컴포넌트가 atom을 읽고 쓰게 하기 위해서 useRecoilState()를 사용한다.
 
   ```javascript
   const [text, setText] = useRecoilState(textState);
@@ -249,11 +249,11 @@ const data = useOutletContext(); // { fruit: 'apple' }
 
   - [https://recoiljs.org/ko/docs/introduction/getting-started](https://recoiljs.org/ko/docs/introduction/getting-started)
 
-- ### `useRecoilValue(state)`: Recoil state 값을 반환한다. 읽기 전용 상태와 쓰기 가능 상태에서 모두 동작하기 때문에 컴포넌트가 상태를 읽기 전용으로 사용하고 싶을 때 추천하는 hook이다. 이 hook은 React 컴포넌트에서 사용하면 상태가 업데이트 될 때 리렌더링 하도록 컴포넌트를 subscribe 한다.
+- `useRecoilValue(state)`: Recoil state 값을 반환한다. 읽기 전용 상태와 쓰기 가능 상태에서 모두 동작하기 때문에 컴포넌트가 상태를 읽기 전용으로 사용하고 싶을 때 추천하는 hook이다. 이 hook은 React 컴포넌트에서 사용하면 상태가 업데이트 될 때 리렌더링 하도록 컴포넌트를 subscribe 한다.
 
   - [https://recoiljs.org/ko/docs/api-reference/core/useRecoilValue/](https://recoiljs.org/ko/docs/api-reference/core/useRecoilValue/)
 
-- ### `useSetRecoilState(state)`: Recoil state의 값을 업데이트하기 위한 setter 함수를 반환한다. 상태를 변경하기 위해 비동기로 사용될 수 있는 setter 함수를 반환한다. setter는 새로운 값이나 이전 값을 인수로 받는 updater 함수를 넘겨준다.
+- `useSetRecoilState(state)`: Recoil state의 값을 업데이트하기 위한 setter 함수를 반환한다. 상태를 변경하기 위해 비동기로 사용될 수 있는 setter 함수를 반환한다. setter는 새로운 값이나 이전 값을 인수로 받는 updater 함수를 넘겨준다.
   - [https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/](https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/)
 
 ## 📌 react-hook-form
