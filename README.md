@@ -264,6 +264,8 @@ const data = useOutletContext(); // { fruit: 'apple' }
 - `register(name)`: name, onBlur(해당 form 요소에서 벗어났을 때 실행되는 이벤트), onChange, onClick, ref를 반환하는 함수
 - `watch()`: form의 입력값들의 변화를 관찰할 수 있게 해주는 함수
 - `handleSubmit(onValidFn, onInvalidFn?)`: 데이터가 유효할 때 호출되는 함수, 데이터가 유효하지 않을 때 호출되는 함수 두 함수를 인자로 받아서 validation을 처리한다. 작성한 코드를 실행할 때 사용한다. [https://react-hook-form.com/api/useform/handlesubmit](https://react-hook-form.com/api/useform/handlesubmit)
+- `setError(formName, error)`: 특정 form에 에러를 발생시킨다.
+- `setValue(formName, value)`: 특정 form의 값을 설정한다.
 
 ```jsx
 import { useForm } from 'react-hook-form';
