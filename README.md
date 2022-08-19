@@ -254,7 +254,12 @@ const data = useOutletContext(); // { fruit: 'apple' }
   - [https://recoiljs.org/ko/docs/api-reference/core/useRecoilValue/](https://recoiljs.org/ko/docs/api-reference/core/useRecoilValue/)
 
 - `useSetRecoilState(state)`: Recoil state의 값을 업데이트하기 위한 setter 함수를 반환한다. 상태를 변경하기 위해 비동기로 사용될 수 있는 setter 함수를 반환한다. setter는 새로운 값이나 이전 값을 인수로 받는 updater 함수를 넘겨준다.
+
   - [https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/](https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/)
+
+- `Selector()`: 기존 state를 가져와서, 그 state를 이용해 새로운 state(`derived state`)를 만들어서 반환할 수 있다. 기존 state를 이용해서 그 output을 변형하는 것이지, 원본 state를 변형시키지는 않는다. 다른 데이터에 의존하는 동적인 데이터를 만들 수 있는 강력한 개념이다.
+  - [https://recoiljs.org/ko/docs/basic-tutorial/selectors/](https://recoiljs.org/ko/docs/basic-tutorial/selectors/)
+  - [https://recoiljs.org/ko/docs/api-reference/core/selector/](https://recoiljs.org/ko/docs/api-reference/core/selector/)
 
 ## 📌 react-hook-form
 
