@@ -4,6 +4,7 @@
 
 - [TOP 100 Crypto Tracker](https://github.com/DINGUNOTE/top100-crypto-tracker)
 - [ToDo](https://github.com/DINGUNOTE/practice-recoil-todo)
+- [Kanban](https://github.com/DINGUNOTE/kanban)
 
 ## 📌 styled-components
 
@@ -258,8 +259,40 @@ const data = useOutletContext(); // { fruit: 'apple' }
   - [https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/](https://recoiljs.org/ko/docs/api-reference/core/useSetRecoilState/)
 
 - `Selector()`: 기존 state를 가져와서, 그 state를 이용해 새로운 state(`derived state`)를 만들어서 반환할 수 있다. 기존 state를 이용해서 그 output을 변형하는 것이지, 원본 state를 변형시키지는 않는다. 다른 데이터에 의존하는 동적인 데이터를 만들 수 있는 강력한 개념이다.
+
+  - `get`: 파생된 상태의 값을 평가하는 함수. 값을 직접 반환하거나 비동기적인 Promise나 또는 같은 유형을 나타내는 다른 atom이나 selector를 반환할 수 있다. 첫 번째 매개변수로 다음 속성을 포함하는 객체를 전달한다.
+
+    - `get(state)`: 다른 atom이나 selector로부터 값을 찾는데 사용되는 함수. 이 함수에 전달된 모든 atom과 selector는 암시적으로 selector에 대한 의존성 목록에 추가된다. Selector의 의존성이 변경되면 Selector가 다시 평가된다.
+
+  - `set`: 이 속성이 설정되면 selector는 쓰기 가능한 상태를 반환한다. 첫번째 매개변수로 콜백 객체와 새로 입력 값이 전달된다. 사용자가 selector를 재설정할 경우 새로 입력 값은 T 타입의 값 또는 DefaultValue 타입의 객체일 수 있다. 콜백에는 다음이 포함된다.
+    - `get(state)`: 다른 atom이나 selector로부터 값을 찾는데 사용되는 함수. 이 함수는 selector를 주어진 atom이나 selector를 subscribe하지 않는다.
+    - `set(state, newValue)`: 업스트림 Recoil 상태의 값을 설정할 때 사용되는 함수. 첫 번째 매개변수는 Recoil 상태, 두 번째 매개변수는 새로운 값이다. 새로운 값은 업데이트 함수나 재설정 액션을 전파하는 DefalutValue 객체일 수 있다.
   - [https://recoiljs.org/ko/docs/basic-tutorial/selectors/](https://recoiljs.org/ko/docs/basic-tutorial/selectors/)
   - [https://recoiljs.org/ko/docs/api-reference/core/selector/](https://recoiljs.org/ko/docs/api-reference/core/selector/)
+
+  ```javascript
+  import { atom, selector } from 'recoil';
+
+  export const minuteState = atom({
+    key: 'minutes',
+    default: 0,
+  });
+
+  export const hoursSelector =
+    selector <
+    number >
+    {
+      key: 'hours',
+      get: ({ get }) => {
+        const minutes = get(minuteState);
+        return minutes / 60;
+      },
+      set: ({ set }, newValue) => {
+        const minutes = Number(newValue) * 60;
+        set(minuteState, minutes);
+      },
+    };
+  ```
 
 ## 📌 react-hook-form
 
