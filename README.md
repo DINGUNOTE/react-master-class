@@ -358,6 +358,91 @@ const App = () => {
 export default App;
 ```
 
+## 📌 react-beautiful-dnd
+
+드래그 앤 드랍을 쉽게 구현할 수 있게 도와주는 라이브러리이다.
+
+### Setup
+
+- `DragDropContext`: dnd가 사용될 컨테이너 컴포넌트, onDragEnd가 필수 값이고, children 요소가 반드시 있어야 한다.
+  - `onDragEnd`: 사용자가 드래그를 끝낸 시점에 실행되는 함수,
+    - `DropResult`: 드롭 결과의 Interface
+    - `result`: onDragEnd의 인자로 받을 수 있는 결과 값들이 들어있는 객체
+      - `result.draggableId`: 드래그 되었던 Draggable의 id
+      - `result.type`: 드래그 되었던 Draggable의 type
+      - `result.source`: Draggable이 시작된 위치(location)
+      - `result.destination`: Draggable이 끝난 위치(location). 만약 Draggable이 시작한 위치와 같다면 null이다.
+- `Droppable`: 어떤 요소를 드롭할 수 있는 영역, droppableId, children 요소가 반드시 있어야 한다.
+  - `droppableId`: 드롭할 수 있는 영역이 여러 개일 수 있기 때문에 droppableId로 구분이 필요하다.
+  - `children`: children 요소는 react 요소이면 안되고, 함수로 구현돼야 한다. 함수에서 provided, snapshot 두 개의 인자를 받을 수 있다. provided로부터 innerRef와 placeholder, droppableProps를 받는다. snapshot으로부터 isDraggingOver, draggingOverWith?, draggingFromThisWith?, isUsingPlaceholder를 받을 수 있다.
+    - `innerRef`:
+    - `placeholder?`: placeholder는 요소가 드래그 돼서 해당 영역을 빠져나갔을 때도 해당 요소의 영역을 차지하고 있을 것인지를 결정하는 속성이다.
+    - `droppableProps`: 드롭할 수 있는 요소를 지정하는 속성
+    - `isDraggingOver`: 현재 선택한 Draggable이 특정 Droppable 위에 드래깅 되고 있는지 여부
+    - `draggingOverWith?`: Droppable 위로 드래그하는 Draggable ID
+    - `draggingFormThisWith?`: 현재 Droppable에서 벗어나 드래그되고 있는 Draggable ID
+    - `isUsingPlaceholder`: placeholder가 사용되고 있는지 여부
+- `Draggable`: 어떤 요소를 드래그할 수 있는 영역, draggableId, index, children가 필요하고, key 값은 고유해야 하며, map 등을 사용할 때 key 값을 index로 하면 안된다. 일반적으로는 draggableId와 같게 하는 것을 권장한다.
+  - `draggableId`: 요소를 구분하기 위한 id
+  - `index`: 요소의 index
+  - `children`: 함수로 구현된 요소가 들어가야 한다. provided로부터 draggableProps와 dragHandleProps를 받아서 사용한다. snapshot으로부터 isDragging, isDropAnimating, dropAnimation?, combineWith?, combineTargetFor?, mode 등의 속성을 사용할 수 있다.
+    - `draggableProps`: 요소가 기본적으로 드래그 되기를 원한다면 사용한다.
+    - `dragHandleProps?`: 기본적으로 모든 영역이 드래그 가능한 영역이지만, 해당 옵션으로 드래그 가능한 영역을 지정할 수 있다.
+    - `isDragging`: Draggable이 드래그 되고 있는지 여부
+    - `dropAnimation`: 드롭 애니메이션 정보
+    - `draggingOver`
+    - ``
+
+```jsx
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
+
+const App = () => {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const onDragEnd = ({ draggableId, source, destination }: DropResult) => {
+    if (destination?.index === undefined) return;
+    setToDos((oldToDos) => {
+      const copyToDos = [...oldToDos];
+      copyToDos.splice(source.index, 1); // Delete Item copyToDos[sourceIndex]
+      copyToDos.splice(destination.index, 0, draggableId); // Put back the item on the destination.index
+      return copyToDos;
+    });
+  };
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Container>
+        <Droppable droppableId="droppable-1">
+          {(provided) => (
+            <Board ref={provided.innerRef} {...provided.droppableProps}>
+              {toDos.map((toDo, index) => (
+                <Draggable draggableId={toDo} index={index} key={toDo}>
+                  {(provided) => (
+                    <Card
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      {toDo}
+                    </Card>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </Board>
+          )}
+        </Droppable>
+      </Container>
+    </DragDropContext>
+  );
+};
+
+export default App;
+```
+
 > ### Reference
 >
 > [https://nomadcoders.co/react-masterclass/](https://nomadcoders.co/react-masterclass/)
