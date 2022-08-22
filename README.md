@@ -375,7 +375,7 @@ export default App;
 - `Droppable`: 어떤 요소를 드롭할 수 있는 영역, droppableId, children 요소가 반드시 있어야 한다.
   - `droppableId`: 드롭할 수 있는 영역이 여러 개일 수 있기 때문에 droppableId로 구분이 필요하다.
   - `children`: children 요소는 react 요소이면 안되고, 함수로 구현돼야 한다. 함수에서 provided, snapshot 두 개의 인자를 받을 수 있다. provided로부터 innerRef와 placeholder, droppableProps를 받는다. snapshot으로부터 isDraggingOver, draggingOverWith?, draggingFromThisWith?, isUsingPlaceholder를 받을 수 있다.
-    - `innerRef`:
+    - `innerRef`: ref 속성을 통해 HTML 요소를 사용하기 위해서 받는 속성
     - `placeholder?`: placeholder는 요소가 드래그 돼서 해당 영역을 빠져나갔을 때도 해당 요소의 영역을 차지하고 있을 것인지를 결정하는 속성이다.
     - `droppableProps`: 드롭할 수 있는 요소를 지정하는 속성
     - `isDraggingOver`: 현재 선택한 Draggable이 특정 Droppable 위에 드래깅 되고 있는지 여부
