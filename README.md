@@ -443,6 +443,25 @@ const App = () => {
 export default App;
 ```
 
+## 📌 Framer Motion
+
+React 애니메이션 라이브러리
+
+```bash
+npm i framer-motion
+```
+
+```jsx
+import { motion } from 'framer-motion';
+
+export const MyComponent = ({ isVisible }) => (
+  // motion.HTMLElement
+  <motion.div animate={{ opacity: isVisible ? 1 : 0 }} />
+);
+```
+
+[https://github.com/framer/motion](https://github.com/framer/motion)
+
 > ### Reference
 >
 > [https://nomadcoders.co/react-masterclass/](https://nomadcoders.co/react-masterclass/)
