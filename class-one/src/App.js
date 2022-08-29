@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,6 +60,7 @@ const App = () => {
       <Box>
         <Emoji as="p">😀</Emoji>
       </Box>
+      <motion.div></motion.div>
     </Wrapper>
   );
 };
