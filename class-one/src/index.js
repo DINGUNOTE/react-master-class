@@ -8,10 +8,10 @@ const darkTheme = {
   backgroundColor: '#111',
 };
 
-const lightTheme = {
-  textColor: '#111',
-  backgroundColor: 'whitesmoke',
-};
+// const lightTheme = {
+//   textColor: '#111',
+//   backgroundColor: 'whitesmoke',
+// };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
