@@ -445,18 +445,62 @@ export default App;
 
 ## 📌 Framer Motion
 
-React 애니메이션 라이브러리
+React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용할 수 있다.
+
+- `initial`: 애니메이션의 초기값
+- `animate`: 애니메이트시킬 속성
+- `transition`: 움직이는 방식
+- `variants`: 컴포넌트가 가질 수 있는 미리 정의된 state
+
+  ```jsx
+  const Variants = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+
+  <motion.div initial="hidden" animate="visible" variants={Variants} />;
+  ```
+
+  - `delayChildren`: 부모 요소가 애니메이션 된 후 자식 요소의 애니메이션을 시작하고 싶을 때의 지연 시간
+  - `staggerChildren`: 자식 요소의 애니메이션의 각 요소 사이의 지연 시간
 
 ```bash
 npm i framer-motion
 ```
 
 ```jsx
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
+
+const Box = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  background-color: tomato;
+  border-radius: 15px;
+`;
+
+const myVars = {
+  start: { scale: 0 },
+  end: { scale: 1, rotate: 180, transition: { type: 'spring', bounce: 0.75 } },
+};
 
 export const MyComponent = ({ isVisible }) => (
   // motion.HTMLElement
   <motion.div animate={{ opacity: isVisible ? 1 : 0 }} />
+
+  // with styled-components
+  <Box animate={{borderRadius: 50px}} transition={{ duration: 3 }} />
+  <Box
+    initial={{ scale: 0 }}
+    animate={{ scale: 1, rotate: 180 }}
+    transition={{ type: 'spring', bounce: 0.75 }}
+  />
+
+  // use variants
+  <Box variants={myVars} initial="start" animate="end" />
 );
 ```
 
