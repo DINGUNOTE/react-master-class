@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useRef } from 'react';
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,63 +12,47 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  height: 600px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  overflow: hidden;
+`;
+
 const Box = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   width: 200px;
   height: 200px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 30px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
-const Circle = styled(motion.div)`
-  place-self: center;
-  width: 70px;
-  height: 70px;
-  background-color: #fff;
-  border-radius: 35px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-`;
-
 const boxVariants = {
-  start: {
-    opacity: 0,
-    scale: 0,
-  },
-  end: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: 'spring',
-      duration: 0.5,
-      bounce: 0.5,
-      delayChildren: 0.5,
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const circleVariants = {
-  start: {
-    y: 10,
-    opacity: 0,
-  },
-  end: {
-    y: 0,
-    opacity: 1,
-  },
+  hover: { scale: 1.1, rotate: 90 },
+  click: { scale: 1, borderRadius: '50%' },
+  drag: { backgroundColor: 'rgb(46, 204, 113)' },
 };
 
 const App = () => {
+  const dragArea = useRef(null);
   return (
     <Wrapper>
-      <Box variants={boxVariants} initial="start" animate="end">
-        <Circle variants={circleVariants} />
-        <Circle variants={circleVariants} />
-        <Circle variants={circleVariants} />
-        <Circle variants={circleVariants} />
-      </Box>
+      <Container ref={dragArea}>
+        <Box
+          drag
+          dragConstraints={dragArea}
+          dragSnapToOrigin
+          dragElastic={0}
+          variants={boxVariants}
+          whileHover="hover"
+          whileTap="click"
+          whileDrag="drag"
+        ></Box>
+      </Container>
     </Wrapper>
   );
 };
