@@ -450,7 +450,7 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
 - `initial`: 애니메이션의 초기값
 - `animate`: 애니메이트시킬 속성
 - `transition`: 움직이는 방식
-- `variants`: 컴포넌트가 가질 수 있는 미리 정의된 state
+- `variants`: 컴포넌트가 가질 수 있는 미리 정의된 state. variants를 활용해서 코드 가독성을 높이고, 코드를 깔끔하게 할 수 있다.
 
   ```jsx
   const Variants = {
@@ -463,6 +463,14 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
 
   - `delayChildren`: 부모 요소가 애니메이션 된 후 자식 요소의 애니메이션을 시작하고 싶을 때의 지연 시간
   - `staggerChildren`: 자식 요소의 애니메이션의 각 요소 사이의 지연 시간
+
+- `drag`: 드래그 기능 추가. boolean | 'x' | 'y'. 기본이 양방향 드래그 기능이고 x 혹은 y를 설정하면 특정 방향으로만 드래그 할 수 있게 설정 가능하다.
+- `dragConstraints`: 드래그 가능 영역에 조건을 적용한다.(드래그 가능한 영역에 가장자리에서 얼마만큼까지 허용할 것인지 지정) 픽셀을 이용해서 값을 지정할 수도 있고, ref을 이용해서 영역을 지정할 수도 있다.
+- `dragSnapToOrigin`: boolean. true인 경우 드래그 가능한 요소를 드래그 중 놓을 때, 원점으로 다시 애니메이션 된다.
+- `dragElastic`: 외부 제약 조건에서 허용되는 이동 정도. 0 = 움직임 X, 1 = 전체 움직임. 기본 값 0.5, false = 비활성화
+- `whileHover`: 마우스오버 시 애니메이션 설정
+- `whileTab`: 마우스클릭 시 애니메이션 설정
+- `whileDrag`: 드래그 될 때 애니메이션 설정
 
 ```bash
 npm i framer-motion
@@ -487,6 +495,13 @@ const myVars = {
   end: { scale: 1, rotate: 180, transition: { type: 'spring', bounce: 0.75 } },
 };
 
+const boxVariants = {
+  hover: { scale: 1.1, rotate: 90 },
+  click: { scale: 1, borderRadius: '50%' },
+  drag: { backgroundColor: 'rgb(46, 204, 113)' },
+};
+
+
 export const MyComponent = ({ isVisible }) => (
   // motion.HTMLElement
   <motion.div animate={{ opacity: isVisible ? 1 : 0 }} />
@@ -500,7 +515,16 @@ export const MyComponent = ({ isVisible }) => (
   />
 
   // use variants
+  // variants의 키 값은 항상 문자열로 들어간다.
   <Box variants={myVars} initial="start" animate="end" />
+
+  <Box
+    drag
+    variants={boxVariants}
+    whileHover="hover"
+    whileTap="click"
+    whileDrag="drag"
+  ></Box>
 );
 ```
 
