@@ -465,12 +465,58 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
   - `staggerChildren`: 자식 요소의 애니메이션의 각 요소 사이의 지연 시간
 
 - `drag`: 드래그 기능 추가. boolean | 'x' | 'y'. 기본이 양방향 드래그 기능이고 x 혹은 y를 설정하면 특정 방향으로만 드래그 할 수 있게 설정 가능하다.
-- `dragConstraints`: 드래그 가능 영역에 조건을 적용한다.(드래그 가능한 영역에 가장자리에서 얼마만큼까지 허용할 것인지 지정) 픽셀을 이용해서 값을 지정할 수도 있고, ref을 이용해서 영역을 지정할 수도 있다.
-- `dragSnapToOrigin`: boolean. true인 경우 드래그 가능한 요소를 드래그 중 놓을 때, 원점으로 다시 애니메이션 된다.
-- `dragElastic`: 외부 제약 조건에서 허용되는 이동 정도. 0 = 움직임 X, 1 = 전체 움직임. 기본 값 0.5, false = 비활성화
+  - `dragConstraints`: 드래그 가능 영역에 조건을 적용한다.(드래그 가능한 영역에 가장자리에서 얼마만큼까지 허용할 것인지 지정) 픽셀을 이용해서 값을 지정할 수도 있고, ref을 이용해서 영역을 지정할 수도 있다.
+  - `dragSnapToOrigin`: boolean. true인 경우 드래그 가능한 요소를 드래그 중 놓을 때, 원점으로 다시 애니메이션 된다.
+  - `dragElastic`: 외부 제약 조건에서 허용되는 이동 정도. 0 = 움직임 X, 1 = 전체 움직임. 기본 값 0.5, false = 비활성화
 - `whileHover`: 마우스오버 시 애니메이션 설정
 - `whileTab`: 마우스클릭 시 애니메이션 설정
 - `whileDrag`: 드래그 될 때 애니메이션 설정
+- `useMotionValue()`: 애니메이션 값의 상태(state)와 속도(velocity)를 추적한다. 모든 모션 컴포넌트는 내부적으로 MotionValues를 사용해서 애니메이션 값의 상태와 속도를 추적한다. 일반적으로 자동으로 생성된다. (MotionValue는 React State가 아니기 때문에 Motion Value 값이 바뀌어도 당연히 리렌더링이 일어나지 않는다.)
+
+  ```javascript
+  import { motion, useMotionValue } from 'framer-motion';
+
+  export const MyComponent = () => {
+    const x = useMotionValue(0);
+    return <motion.div style={{ x }} />;
+  };
+  ```
+
+  - useMotionValue hook으로 MotionValues를 생성할 수 있다. useMotionValue에 전달된 값은 MotionValue의 초기 상태로 작동한다.<br>
+  - x.set(100) - `set` 메서드로 업데이트할 수 있다. React 리렌더링을 일으키지 않는다.<br>
+  - x.get() // 100 - `get` 메서드로 값을 읽을 수 있다. MotionValue는 문자열이나 숫자가 될 수 있다.
+
+- `useTransform()`: useTransform hook을 통해 MotionValues를 연결한다. useTransform() 한 값 범위에서 다른 값 범위로 매핑해서 다른 MotionValue의 output을 반환하는 MotionValue를 만든다. x(Motion Value) 값을 다른 output값으로 변환해준다.
+
+  ```javascript
+  import { useMotionValue, useTransform } from 'framer-motion';
+
+  // ex) x: -400 => 1
+  const x = useMotionValue(0);
+  const input = [-200, 0, 200];
+  const output = [0, 1, 0];
+  const opacity = useTransform(x, input, output);
+
+  return <motion.div drag="x" style={{ x, opacity }} />;
+  ```
+
+- `useScroll()`: 뷰포트가 스크롤될 때 업데이트되는 MotionValues를 반환한다. 아래 값들은 모두 MotionValue<number>를 넘겨준다.
+
+  - scrollX: 실제 수평 스크롤 픽셀
+  - scrollY: 실제 수직 스크롤 픽셀
+  - scrollXProgress: 0 ~ 1 사이의 수평 스크롤 변환 값
+  - scrollYProgress: 0 ~ 1 사이의 수직 스크롤 변환 값
+
+    ```javascript
+    import { useScroll } from 'framer-motion';
+
+    export const MyComponent = () => {
+      const { scrollYProgress } = useScroll();
+      return <motion.div style={{ scaleX: scrollYProgress }} />;
+    };
+    ```
+
+    [https://www.framer.com/docs/motionvalue/##useviewportscroll](https://www.framer.com/docs/motionvalue/##useviewportscroll)
 
 ```bash
 npm i framer-motion
