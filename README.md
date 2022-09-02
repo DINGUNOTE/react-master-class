@@ -517,6 +517,86 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
     ```
 
     [https://www.framer.com/docs/motionvalue/##useviewportscroll](https://www.framer.com/docs/motionvalue/##useviewportscroll)
+    <br>[스크롤 프로그레스바 예시 코드](https://codesandbox.io/s/framer-motion-usescroll-xwdxbt?from-embed)
+
+- `Line drawing`: svg 엘리먼트에 `pathLength`, `pathSpacing`, `pathOffset` 속성을 이용해서 Line drawing 애니메이션을 만들 수 있다.<br>[https://www.framer.com/docs/examples/#line-drawing](https://www.framer.com/docs/examples/#line-drawing)
+
+  - motion.path 컴포넌트는 세 가지 강력한 svg path 속성인 pathLength, pathSpacing 및 pathOffset을 가지고 있다. 수동 경로 측정이 필요 없이 모두 0에서 1 사이의 값으로 설정된다.
+    ```jsx
+    <motion.path initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} />
+    ```
+
+- `AnimatePresence` : React 트리에서 컴포넌트가 제거될 때 제거되는 컴포넌트에 애니메이션 효과를 줄 수 있다.
+
+  - `exit`: 이 컴포넌트가 트리에서 제거될 때 발생시킬 애니메이션
+
+    ```jsx
+    import { motion, AnimatePresence } from 'framer-motion';
+
+    export const myComponent = ({ isVisible }) => (
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
+    );
+    ```
+
+  - `key`: AnimatePresence의 단일 자식 key를 변경해서 Slider를 쉽게 만들 수 있다.
+
+    ```jsx
+    export const Slider = ({ image }) => (
+      <AnimatePresence>
+        <motion.img
+          key={image.src}
+          src={image.src}
+          initial={{ x: 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -300, opacity: 0 }}
+        ></motion.img>
+      </AnimatePresence>
+    );
+    ```
+
+    [https://www.framer.com/docs/animate-presence/##unmount-animations](https://www.framer.com/docs/animate-presence/##unmount-animations)
+    <br>[슬라이더 예시 코드](https://codesandbox.io/s/framer-motion-image-gallery-pqvx3?from-embed)
+
+  - `mode`: `wait`로 설정하면 AnimatePresence는 한 번에 하나의 컴포넌트만 렌더링한다. exiting 중인 컴포넌트는 entering하는 컴포넌트가 렌더링되기 전에 exit 애니메이션을 완료한다. `sync`로 설정하면 동시에 애니메이션이 일어난다.
+
+    ```jsx
+    <AnimatePresence mode="wait">
+      <motion.div key={currentItem} exit={{ opacity: 0 }} />
+    </AnimatePresence>
+    ```
+
+    [https://www.framer.com/docs/animate-presence/###exitbeforeenter](https://www.framer.com/docs/animate-presence/###exitbeforeenter)
+
+  - `custom`: 각 애니메이션 컴포넌트에 대해 variants를 동적으로 적용할 때 사용할 수 있는 사용자 지정 데이터
+
+    ```jsx
+    const variants = {
+      visible: (custom) => ({
+        opacity: 1,
+        transition: {
+          delay: custom * 0.2,
+        },
+      }),
+    };
+
+    <motion.div variants={variants} custom={0} animate="visible">
+    <motion.div variants={variants} custom={1} animate="visible">
+    <motion.div variants={variants} custom={2} animate="visible">
+    ```
+
+    [https://www.framer.com/docs/component/###custom](https://www.framer.com/docs/component/###custom)
+
+  [https://www.framer.com/docs/animate-presence/](https://www.framer.com/docs/animate-presence/)
+
+### Usage
 
 ```bash
 npm i framer-motion
