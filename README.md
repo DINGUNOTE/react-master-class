@@ -5,6 +5,7 @@
 - [TOP 100 Crypto Tracker](https://github.com/DINGUNOTE/top100-crypto-tracker)
 - [ToDo](https://github.com/DINGUNOTE/practice-recoil-todo)
 - [Kanban](https://github.com/DINGUNOTE/kanban)
+- [Nomflix](https://github.com/DINGUNOTE/nomflix)
 
 ## 📌 styled-components
 
