@@ -596,6 +596,21 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
 
   [https://www.framer.com/docs/animate-presence/](https://www.framer.com/docs/animate-presence/)
 
+- `layout`: true인 경우 해당 컴포넌트는 레이아웃이 변경될 때 새 위치에 자동으로 애니메이션을 적용한다. 크기나 위치나 변경될 때 모션 컴포넌트의 레이아웃에 자동으로 애니메이션을 적용하는 레이아웃 prop을 제공한다. 부모 플렉스박스 방향, 너비, 상단/오른쪽 등 레이아웃 변경의 원인이 무엇이든 상관없이 애니메이션 자체는 최대 성능을 위해 변환되어서 수행된다.
+
+  ```jsx
+  <motion.div layout></motion.div>
+  ```
+
+  [https://www.framer.com/docs/animate-shared-layout/#syncing-layout-animations](https://www.framer.com/docs/animate-shared-layout/#syncing-layout-animations)
+
+- `Animate between components`: AnimateSharedLayout은 동일한 layoutId prop을 가진 모션 컴포넌트들 간에 애니메이션을 적용할 수 있다. layoutId가 있는 새 컴포넌트가 추가되고 다른 컴포넌트가 제거되면 이전 컴포넌트에서 새 컴포넌트로 레이아웃 애니메이션을 수행한다. 새 컴포넌트는 이전 컴포넌트의 애니메이션 값도 초기 상태로 상속한다. 따라서 시각적으로 하나의 연속 컴포넌트로 처리된다.
+  ```jsx
+  isSelected && <motion.div layoutId="underline" />;
+  ```
+  [https://www.framer.com/docs/animate-shared-layout/#animate-between-components](https://www.framer.com/docs/animate-shared-layout/#animate-between-components)
+  <br>[레이아웃 애니메이션 예시](https://www.framer.com/docs/animate-shared-layout/#syncing-layout-animations)
+
 ### Usage
 
 ```bash
