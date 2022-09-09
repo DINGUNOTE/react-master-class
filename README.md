@@ -595,6 +595,12 @@ React 애니메이션 라이브러리, styled-components와 쉽게 같이 사용
 
     [https://www.framer.com/docs/component/###custom](https://www.framer.com/docs/component/###custom)
 
+  - `onExitComplete`: exit 중인 모든 노드들이 애니메이션을 끝내면 실행된다.
+    ```javascript
+    AnimatePresenceProps.onExitComplete?:(() => void) | undefined
+    ```
+    [https://www.framer.com/docs/animate-presence/###onexitcomplete](https://www.framer.com/docs/animate-presence/###onexitcomplete)
+
   [https://www.framer.com/docs/animate-presence/](https://www.framer.com/docs/animate-presence/)
 
 - `layout`: true인 경우 해당 컴포넌트는 레이아웃이 변경될 때 새 위치에 자동으로 애니메이션을 적용한다. 크기나 위치나 변경될 때 모션 컴포넌트의 레이아웃에 자동으로 애니메이션을 적용하는 레이아웃 prop을 제공한다. 부모 플렉스박스 방향, 너비, 상단/오른쪽 등 레이아웃 변경의 원인이 무엇이든 상관없이 애니메이션 자체는 최대 성능을 위해 변환되어서 수행된다.
